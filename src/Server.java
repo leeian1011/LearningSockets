@@ -19,7 +19,7 @@ public class Server {
 
         //PrintWriter is a Writer class that accepts an output char stream class
         //in this case we are using the client's output stream (essentially whatever is being sent to the server)
-        PrintWriter serverSideOutput = new PrintWriter(client.getOutputStream(), true, null);
+        PrintWriter serverSideOutput = new PrintWriter(client.getOutputStream(), true);
         
         //InputStreamReader is a byte stream class that reads accepts an inputstream.
         //we initialize an anonymous InputStreamReader with the client's input stream (essentially the server's output stream)
@@ -28,13 +28,14 @@ public class Server {
         //using a charset.
         BufferedReader serverSideInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
         ){
-            System.out.println("Initialized server");
-            System.out.println(Inet4Address.getLocalHost().getHostName());
+            System.out.println("Client has made a socket connection");
             String inputLine, outputLine;
             //The Simple Protocol is a self made protocol that handles server ouput and socket connection with clients.
             // it essentially determines the server's "response".
             SimpleProtocol communicationProtocol = new SimpleProtocol();
 
+            serverSideOutput.println("Input a name");
+            System.out.println(serverSideInput.readLine() + " has connected");
             //we set the outputLine (the server's response) to the protocol's reaction to the user's input
             outputLine = communicationProtocol.process(null);
             serverSideOutput.println(outputLine);
