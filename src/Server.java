@@ -42,11 +42,12 @@ public class Server {
 
             while((inputLine = serverSideInput.readLine()) != null){
                 outputLine = communicationProtocol.process(inputLine);
-                serverSideOutput.println(outputLine);
                 if(outputLine.equals("Adios")){
                     serverSideOutput.println(outputLine);
+                    System.out.println("Client has requested termination of server.");
                     break;
                 }
+                serverSideOutput.println(outputLine);
             }
             
         }

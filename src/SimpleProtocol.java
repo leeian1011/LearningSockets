@@ -13,15 +13,12 @@ public class SimpleProtocol {
             state = SENTRESPONSE;
         }else if(state == SENTRESPONSE){
             output = "Acknowledged. Input is " + input;
-            state = WAITING;
-        }else if(input.equals("quit")){
-            output = "Adios";
-            state = END;
+            if(input.toLowerCase().equals("/quit")){
+                output = "Adios";
+                state = END;
+            }
         }
         return output;
     }
-
-
-
-    
 }
+
