@@ -6,6 +6,8 @@ import java.net.*;
 public class Server {
     public static void main(String[] args) throws Exception {
         int portNumber = Integer.parseInt(args[0]);
+        System.out.println("Host Address: " + Inet4Address.getLocalHost().getHostName() + ":" + portNumber);
+        System.out.println("Awaiting Client Connection");
 
         //use a try-with-resources to handle exceptions easily.
 
@@ -26,10 +28,14 @@ public class Server {
         //using a charset.
         BufferedReader serverSideInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
         ){
+            System.out.println("Initialized server");
+            System.out.println(Inet4Address.getLocalHost().getHostName());
             String inputLine, outputLine;
-
+            //The Simple Protocol is a self made protocol that handles server ouput and socket connection with clients.
+            // it essentially determines the server's "response".
             SimpleProtocol communicationProtocol = new SimpleProtocol();
 
+            //we set the outputLine (the server's response) to the protocol's reaction to the user's input
             outputLine = communicationProtocol.process(null);
             serverSideOutput.println(outputLine);
 
@@ -43,7 +49,5 @@ public class Server {
             }
             
         }
-
-
     }
 }
