@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
-
+//When running the Client you may notice that after every server response it awaits for a client response,
+//this is because the code utilizes a while loop that gets the client's input, prints it on the socket's output stream and then 
+//print out the server response all this only happens once.
 public class Client {
    public static void main(String[] args) {
     String hostName = args[0];

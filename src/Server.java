@@ -7,6 +7,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
         int portNumber = Integer.parseInt(args[0]);
         System.out.println("Host Address: " + Inet4Address.getLocalHost().getHostName() + ":" + portNumber);
+        System.out.println("Host ip: " + Inet4Address.getLocalHost());
         System.out.println("Awaiting Client Connection");
 
         //use a try-with-resources to handle exceptions easily.
