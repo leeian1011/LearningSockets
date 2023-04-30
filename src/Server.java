@@ -12,44 +12,48 @@ public class Server {
         //use a try-with-resources to handle exceptions easily.
 
         try(
-        //initializes a socket for our server to listen in.
+        //initializes a Server Socket that the program listens and waits for a connection request.
         //the server listens in on the port number that we specific in the runtime argument
+
         ServerSocket ss = new ServerSocket(portNumber);
         Socket client = ss.accept();
 
-        //PrintWriter is a Writer class that accepts an output char stream class
-        //in this case we are using the client's output stream (essentially whatever is being sent to the server)
+       //We use a PrintWriter object to write data to the client's socket.
+       //Server-side output will be the client-side input and vice versa!
         PrintWriter serverSideOutput = new PrintWriter(client.getOutputStream(), true);
         
-        //InputStreamReader is a byte stream class that reads accepts an inputstream.
-        //we initialize an anonymous InputStreamReader with the client's input stream (essentially the server's output stream)
-        //and initialize a buffered reader with the anonymous inputstreamreader.
-        //InputStreamReader is a bridge from byte to char streams. it takes byte encoded data and decodes it into characters
-        //using a charset.
+        //We use a BufferedReader Object to read from the client socket's input stream (client's sent data).
+        //to do this we have to connect a InputStreamReader (a byte to char reader bridge) to the Buffered Reader to read from a buffer.
         BufferedReader serverSideInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
         ){
             System.out.println("Client has made a socket connection");
             String inputLine, outputLine;
+
             //The Simple Protocol is a self made protocol that handles server ouput and socket connection with clients.
             // it essentially determines the server's "response".
             SimpleProtocol communicationProtocol = new SimpleProtocol();
 
             serverSideOutput.println("Input a name");
-            System.out.println(serverSideInput.readLine() + " has connected");
+            String id = serverSideInput.readLine();
+            System.out.println(id + " has connected");
+            
             //we set the outputLine (the server's response) to the protocol's reaction to the user's input
             outputLine = communicationProtocol.process(null);
             serverSideOutput.println(outputLine);
-
+            
             while((inputLine = serverSideInput.readLine()) != null){
                 outputLine = communicationProtocol.process(inputLine);
-                if(outputLine.equals("Adios")){
+                if(outputLine.equals("adios")){
                     serverSideOutput.println(outputLine);
+                    serverSideOutput.println("Thank you for contacting the server");
                     System.out.println("Client has requested termination of server.");
-                    break;
+                    client.close();
                 }
-                serverSideOutput.println(outputLine);
-            }
-            
+                serverSideOutput.println(outputLine);                
+            }   
+            System.out.println("server is now ending");
+        }catch(SocketException e){
+            System.out.println("Connection has ended");
         }
     }
 }

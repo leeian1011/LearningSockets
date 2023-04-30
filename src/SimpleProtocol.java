@@ -1,21 +1,35 @@
 public class SimpleProtocol {
     private final int WAITING = 0;
-    private final int SENTRESPONSE = 1;
+    private final int GREETED = 1;
+    private final int READING = 3;
     private final int END = 2;
     private int state = WAITING;
 
 
     public String process(String input){
-        String output = "default_server_response";
+        String output = null;
 
-        if(state == WAITING){
+        if(input == null){
+            System.out.println(state);
             output = "Successfully connected";
-            state = SENTRESPONSE;
-        }else if(state == SENTRESPONSE){
-            output = "Acknowledged. Input is " + input;
+        }
+        if(state == WAITING){
+            System.out.println(state);
+            output = "GREETINGS";
+            state = GREETED;
+        }else if(state == GREETED){
+            System.out.println(state);
+            output = "How can the server assist you?";
+            state = READING;
+        }else if(state == READING){
+            System.out.println(state);
             if(input.toLowerCase().equals("/quit")){
-                output = "Adios";
+                output = "adios";
                 state = END;
+            }else if(input.toLowerCase().equals("request data")){
+                output = "data is being sent";
+            }else{
+                output = "hahahahhahahaha";
             }
         }
         return output;

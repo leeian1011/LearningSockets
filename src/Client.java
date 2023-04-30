@@ -12,16 +12,12 @@ public class Client {
         BufferedReader clientStandardInput = new BufferedReader(new InputStreamReader(System.in));
     ){
         String userInput;
-        
         System.out.println(clientSideInput.readLine());
 
-        userInput = clientStandardInput.readLine();
+       while((userInput = clientStandardInput.readLine()) != null){
         clientSideOutput.println(userInput);
-
-        while((userInput = clientStandardInput.readLine()) != null){
-            clientSideOutput.println(userInput);
-            System.out.println(clientSideInput.readLine());
-        }
+        System.out.println(clientSideInput.readLine());
+       } 
 
     }catch(IOException e){
         System.out.println("Error Client could not connect");
