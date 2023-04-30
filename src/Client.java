@@ -20,7 +20,7 @@ public class Client {
        } 
 
     }catch(IOException e){
-        System.out.println("Error Client could not connect");
+        System.out.println("Server is closed.");
     }
    } 
 }
